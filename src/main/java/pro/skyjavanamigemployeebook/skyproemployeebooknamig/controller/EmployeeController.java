@@ -1,9 +1,13 @@
-package pro.skyjavanamigemployeebook.skyproemployeebooknamig;
+package pro.skyjavanamigemployeebook.skyproemployeebooknamig.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import pro.skyjavanamigemployeebook.skyproemployeebooknamig.data.Employee;
+import pro.skyjavanamigemployeebook.skyproemployeebooknamig.service.EmployeeService;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/employee")
@@ -20,7 +24,7 @@ public class EmployeeController {
     }
 
     @GetMapping("/all")
-    public Employee[] findAll() {
+    public List<Employee> findAll() {
         return employeeService.findAll();
     }
 

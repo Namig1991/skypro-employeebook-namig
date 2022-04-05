@@ -1,4 +1,8 @@
-package pro.skyjavanamigemployeebook.skyproemployeebooknamig;
+package pro.skyjavanamigemployeebook.skyproemployeebooknamig.service;
+
+import pro.skyjavanamigemployeebook.skyproemployeebooknamig.data.Employee;
+
+import java.util.List;
 
 public interface EmployeeService {
     Employee addEmployee(String firstName, String lastName);
@@ -7,5 +11,5 @@ public interface EmployeeService {
 
     Employee findEmployee(String firstName, String lastName);
 
-    Employee[] findAll();
+    List<Employee> findAll();
 }

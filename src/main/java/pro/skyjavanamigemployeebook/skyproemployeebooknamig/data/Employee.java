@@ -1,4 +1,4 @@
-package pro.skyjavanamigemployeebook.skyproemployeebooknamig;
+package pro.skyjavanamigemployeebook.skyproemployeebooknamig.data;
 
 import java.util.Objects;
 

@@ -1,22 +1,30 @@
-package pro.skyjavanamigemployeebook.skyproemployeebooknamig;
+package pro.skyjavanamigemployeebook.skyproemployeebooknamig.service.impl;
 
 import org.springframework.stereotype.Service;
+import pro.skyjavanamigemployeebook.skyproemployeebooknamig.data.Employee;
+import pro.skyjavanamigemployeebook.skyproemployeebooknamig.exception.EmployeeExistsException;
+import pro.skyjavanamigemployeebook.skyproemployeebooknamig.exception.EmployeeIsFullException;
+import pro.skyjavanamigemployeebook.skyproemployeebooknamig.exception.NotFound;
+import pro.skyjavanamigemployeebook.skyproemployeebooknamig.service.EmployeeService;
+
+import java.util.List;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
-    Employee[] employees = new Employee[6];
+
+    List<Employee> employees = List.of();
     static int counter = 0;
 
     @Override
-    public Employee[] findAll() {
+    public List<Employee> findAll() {
         return employees;
     }
 
     @Override
     public Employee addEmployee(String firstName, String lastName) {
-        if (counter <= employees.length) {
-            for (int i = 0; i < employees.length; i++) {
-                if ((employees[i] != null) && employmentVerification(firstName, lastName, employees[i])) {
+        if (counter <= employees.size()) {
+            for (int i = 0; i < employees.size(); i++) {
+                if ((employees.get(i) != null) && employmentVerification(firstName, lastName, employees.get(i))) {
                     throw new EmployeeExistsException();
                 }
             }
@@ -24,19 +32,19 @@ public class EmployeeServiceImpl implements EmployeeService {
             throw new EmployeeIsFullException();
         }
         int i = 0;
-        while (employees[i] != null) {
+        while (employees.get(i) != null) {
             i++;
         }
-        employees[i] = new Employee(firstName, lastName);
+        employees.set(i, new Employee(firstName, lastName));
         counter++;
-        return employees[i];
+        return employees.get(i);
     }
 
     @Override
     public Employee removeEmployee(String firstName, String lastName) {
-        for (int i = 0; i < employees.length; i++) {
-            if ((employees[i] != null) && employmentVerification(firstName, lastName, employees[i])) {
-                employees[i] = null;
+        for (int i = 0; i < employees.size(); i++) {
+            if ((employees.get(i) != null) && employmentVerification(firstName, lastName, employees.get(i))) {
+                employees.set(i, null);
                 counter--;
                 return new Employee(firstName, lastName);
             }
@@ -47,8 +55,8 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public Employee findEmployee(String firstName, String lastName) {
         boolean isFound = false;
-        for (int i = 0; i < employees.length; i++) {
-            if ((employees[i] != null) && employmentVerification(firstName, lastName, employees[i])) {
+        for (int i = 0; i < employees.size(); i++) {
+            if ((employees.get(i) != null) && employmentVerification(firstName, lastName, employees.get(i))) {
                 isFound = true;
             }
         }
