@@ -4,7 +4,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import pro.skyjavanamigemployeebook.skyproemployeebooknamig.data.Employee;
 import pro.skyjavanamigemployeebook.skyproemployeebooknamig.service.EmployeeService;
 
 import java.util.List;
@@ -24,26 +23,23 @@ public class EmployeeController {
     }
 
     @GetMapping("/all")
-    public List<Employee> findAll() {
+    public List<String> findAll() {
         return employeeService.findAll();
     }
 
     @GetMapping("/add")
-    public Employee addEmployeeToList(@RequestParam String firstName, @RequestParam String lastName) {
-        Employee result = employeeService.addEmployee(firstName, lastName);
-        return result;
+    public boolean addEmployeeToList(@RequestParam String firstName, @RequestParam String lastName) {
+        return employeeService.addEmployee(firstName,lastName);
     }
 
     @GetMapping("/remove")
-    public Employee removeEmployeeFromList(@RequestParam String firstName, @RequestParam String lastName) {
-        Employee result = employeeService.removeEmployee(firstName, lastName);
-        return result;
+    public boolean removeEmployeeFromList(@RequestParam String firstName, @RequestParam String lastName) {
+       return employeeService.removeEmployee(firstName,lastName);
     }
 
     @GetMapping("/find")
-    public Employee findEmployeeInList(@RequestParam String firstName, @RequestParam String lastName) {
-        Employee result = employeeService.findEmployee(firstName, lastName);
-        return result;
+    public boolean findEmployeeInList(@RequestParam String firstName, @RequestParam String lastName) {
+        return employeeService.findEmployee(firstName, lastName);
     }
 
 }
