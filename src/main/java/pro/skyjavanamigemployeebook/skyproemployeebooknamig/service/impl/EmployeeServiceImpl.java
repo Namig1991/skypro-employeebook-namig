@@ -1,39 +1,43 @@
 package pro.skyjavanamigemployeebook.skyproemployeebooknamig.service.impl;
 
 import org.springframework.stereotype.Service;
+import pro.skyjavanamigemployeebook.skyproemployeebooknamig.data.Employee;
+import pro.skyjavanamigemployeebook.skyproemployeebooknamig.exception.NotFound;
 import pro.skyjavanamigemployeebook.skyproemployeebooknamig.service.EmployeeService;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
+    List<Employee> employeeList = new ArrayList<>();
 
-    List<String> employeeList;
-
-    public EmployeeServiceImpl() {
-        employeeList = new ArrayList<>();
+    @Override
+    public boolean addEmployee(String firstName, String lastName) {
+        return employeeList.add(new Employee(firstName, lastName));
     }
 
     @Override
-    public List<String> findAll() {
+    public Employee removeEmployee(String firstName, String lastName) {
+        Employee employee = new Employee(firstName,lastName);
+        if(employeeList.contains(employee)){
+            employeeList.remove(employee);
+            return employee;
+        }
+        throw new NotFound();
+    }
+
+    @Override
+    public List<Employee> findAll() {
         return employeeList;
     }
 
     @Override
-    public boolean addEmployee(String firstName, String lastName) {
-        return employeeList.add(firstName);
+    public Employee findEmployee(String firstName, String lastName){
+        Employee employee = new Employee(firstName, lastName);
+        if(employeeList.contains(employee)){
+            return employee;
+        }
+        throw new NotFound();
     }
-
-    @Override
-    public boolean removeEmployee(String firstName, String lastName) {
-        String deletedEmployee = String.valueOf(employeeList.remove(firstName));
-        return deletedEmployee != null;
-    }
-
-    @Override
-    public boolean findEmployee(String firstName, String lastName) {
-        return false;
-    }
-
 }
 

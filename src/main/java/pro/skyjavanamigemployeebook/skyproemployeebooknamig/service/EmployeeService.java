@@ -1,13 +1,19 @@
 package pro.skyjavanamigemployeebook.skyproemployeebooknamig.service;
 
+import pro.skyjavanamigemployeebook.skyproemployeebooknamig.data.Employee;
+
+
 import java.util.List;
 
 public interface EmployeeService {
+
     boolean addEmployee(String firstName, String lastName);
 
-    boolean removeEmployee(String firstName, String lastName);
 
-    boolean findEmployee(String firstName, String lastName);
+    Employee removeEmployee(String firstName, String lastName);
 
-    List<String> findAll();
+    List<Employee> findAll();
+
+    Employee findEmployee(String firstName, String lastName);
 }
+
