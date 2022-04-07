@@ -9,11 +9,20 @@ import java.util.List;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
-    List<Employee> employeeList = new ArrayList<>();
+   private final List<Employee> employeeList = new ArrayList<>();
 
     @Override
     public boolean addEmployee(String firstName, String lastName) {
         return employeeList.add(new Employee(firstName, lastName));
+    }
+
+    @Override
+    public Employee findEmployee(String firstName, String lastName){
+        Employee employee = new Employee(firstName, lastName);
+        if(employeeList.contains(employee)){
+            return employee;
+        }
+        throw new NotFound("Ошибка! Сотруник не найден.");
     }
 
     @Override
@@ -23,21 +32,12 @@ public class EmployeeServiceImpl implements EmployeeService {
             employeeList.remove(employee);
             return employee;
         }
-        throw new NotFound();
+        throw new NotFound("Ошибка! Сотруник не найден!");
     }
 
     @Override
     public List<Employee> findAll() {
         return employeeList;
-    }
-
-    @Override
-    public Employee findEmployee(String firstName, String lastName){
-        Employee employee = new Employee(firstName, lastName);
-        if(employeeList.contains(employee)){
-            return employee;
-        }
-        throw new NotFound();
     }
 }
 

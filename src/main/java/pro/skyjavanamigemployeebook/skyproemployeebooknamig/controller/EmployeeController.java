@@ -13,7 +13,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/employee")
 public class EmployeeController {
-    List<Employee> employeeList = List.of();
+
     private final EmployeeService employeeService;
 
     @Autowired
@@ -32,6 +32,12 @@ public class EmployeeController {
         return result;
     }
 
+    @GetMapping("/find")
+    public Employee findEmployeeInList(@RequestParam String firstName, @RequestParam String lastName) {
+        Employee result = employeeService.findEmployee(firstName, lastName);
+        return result;
+    }
+
     @GetMapping("/remove")
     public Employee removeEmployeeFromList(@RequestParam String firstName, @RequestParam String lastName) {
         Employee result = employeeService.removeEmployee(firstName, lastName);
@@ -41,12 +47,6 @@ public class EmployeeController {
     @GetMapping("/all")
     public List<Employee> findAll() {
         return employeeService.findAll();
-    }
-
-    @GetMapping("/find")
-    public Employee findEmployeeInList(@RequestParam String firstName, @RequestParam String lastName) {
-        Employee result = employeeService.findEmployee(firstName, lastName);
-        return result;
     }
 
 }
