@@ -1,22 +1,17 @@
 package pro.skyjavanamigemployeebook.skyproemployeebooknamig.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import pro.skyjavanamigemployeebook.skyproemployeebooknamig.data.Employee;
 import pro.skyjavanamigemployeebook.skyproemployeebooknamig.service.EmployeeService;
 
-import java.util.List;
+import java.util.Collection;
+
 
 @RestController
 @RequestMapping("/employee")
 public class EmployeeController {
-
     private final EmployeeService employeeService;
 
-    @Autowired
     public EmployeeController(EmployeeService employeeService) {
         this.employeeService = employeeService;
     }
@@ -27,14 +22,8 @@ public class EmployeeController {
     }
 
     @GetMapping("/add")
-    public boolean addEmployeeToList(@RequestParam String firstName, @RequestParam String lastName) {
-        boolean result = employeeService.addEmployee(firstName, lastName);
-        return result;
-    }
-
-    @GetMapping("/find")
-    public Employee findEmployeeInList(@RequestParam String firstName, @RequestParam String lastName) {
-        Employee result = employeeService.findEmployee(firstName, lastName);
+    public Employee addEmployeeToList(@RequestParam String firstName, @RequestParam String lastName) {
+        Employee result = employeeService.addEmployee(firstName, lastName);
         return result;
     }
 
@@ -44,8 +33,14 @@ public class EmployeeController {
         return result;
     }
 
+    @GetMapping("/find")
+    public Employee findEmployeeInList(@RequestParam String firstName, @RequestParam String lastName) {
+        Employee result = employeeService.findEmployee(firstName, lastName);
+        return result;
+    }
+
     @GetMapping("/all")
-    public List<Employee> findAll() {
+    public Collection<Employee> findAll() {
         return employeeService.findAll();
     }
 
