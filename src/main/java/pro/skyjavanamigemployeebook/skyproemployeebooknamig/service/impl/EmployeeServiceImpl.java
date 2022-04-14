@@ -6,49 +6,55 @@ import pro.skyjavanamigemployeebook.skyproemployeebooknamig.exception.EmployeeEx
 import pro.skyjavanamigemployeebook.skyproemployeebooknamig.exception.NotFound;
 import pro.skyjavanamigemployeebook.skyproemployeebooknamig.service.EmployeeService;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
 
-    private final Map<String, Employee> employees;
+    public Map<String, Employee> employees;
 
     public EmployeeServiceImpl() {
         employees = new HashMap<>();
     }
 
-    @Override
-    public Employee addEmployee(String firstName, String lastName) {
-        Employee employeeNew = new Employee(firstName, lastName);
+    private String getKey(String firstName, String lastName) {
+        return firstName + lastName;
+    }
 
-        if (employees.containsKey(firstName + lastName)) {
+    @Override
+    public Employee addEmployee(String firstName, String lastName, Integer salary, Integer department) {
+        Employee employeeNew = new Employee(firstName, lastName, salary, department);
+        if (employees.containsKey(getKey(firstName, lastName))) {
             throw new EmployeeExistsException("Ошибка! Не удалось создать сотрудника");
         }
-        employees.put(firstName + lastName, employeeNew);
+        employees.put(getKey(firstName, lastName), employeeNew);
         return employeeNew;
     }
 
     @Override
     public Employee removeEmployee(String firstName, String lastName) {
-        if (!employees.containsKey(firstName + lastName)) {
-
+        if (!employees.containsKey(getKey(firstName, lastName))) {
             throw new NotFound("Сотрудник не найден");
         }
-        return employees.remove(firstName + lastName);
+        return employees.remove(getKey(firstName, lastName));
     }
 
     @Override
     public Employee findEmployee(String firstName, String lastName) {
-        if (!employees.containsKey(firstName + lastName)) {
+        if (!employees.containsKey(getKey(firstName, lastName))) {
             throw new NotFound("Ошибка! Сотрудник не найден!");
         }
-        return employees.get(firstName + lastName);
+        return employees.get(getKey(firstName, lastName));
     }
 
     @Override
     public Collection<Employee> findAll() {
         return employees.values();
+    }
+
+    @Override
+    public List<Employee> getEmployeeList() {
+        List<Employee> employeeList = new ArrayList<>(employees.values());
+        return employeeList;
     }
 }

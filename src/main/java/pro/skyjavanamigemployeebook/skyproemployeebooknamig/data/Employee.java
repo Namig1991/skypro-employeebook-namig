@@ -3,12 +3,16 @@ package pro.skyjavanamigemployeebook.skyproemployeebooknamig.data;
 import java.util.Objects;
 
 public class Employee {
-    private String firstName;
-    private String lastName;
+    private final String firstName;
+    private final String lastName;
+    private final Integer salary;
+    private final Integer departmentId;
 
-    public Employee(String firstName, String lastName) {
+    public Employee(String firstName, String lastName, Integer salary, Integer departmentId) {
         this.firstName = firstName;
         this.lastName = lastName;
+        this.salary = salary;
+        this.departmentId = departmentId;
     }
 
     public String getFirstName() {
@@ -19,14 +23,13 @@ public class Employee {
         return lastName;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public int getSalary() {
+        return salary;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public int getDepartmentId() {
+        return departmentId;
     }
-
 
     @Override
     public boolean equals(Object obj) {
@@ -43,7 +46,10 @@ public class Employee {
 
     @Override
     public String toString() {
-        return "Имя: " + firstName + " " + " Фамилия: " + lastName + "   ";
+        return "Имя: " + firstName + " " +
+                " Фамилия: " + lastName +
+                " Зарплата = " + salary +
+                " Департамент - " + departmentId;
     }
 
 }
