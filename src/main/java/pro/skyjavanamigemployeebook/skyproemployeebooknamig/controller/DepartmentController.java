@@ -25,7 +25,7 @@ public class DepartmentController {
 
     @GetMapping(path = "/all")
     public List<Employee> allStuff(){
-        return departmentService.allStuff();
+        return (List<Employee>) departmentService.findEmployeesByDepartment();
     }
 
     @GetMapping("/max-salary")
