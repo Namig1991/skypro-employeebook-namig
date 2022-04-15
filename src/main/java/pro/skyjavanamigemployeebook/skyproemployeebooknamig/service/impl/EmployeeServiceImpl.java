@@ -51,10 +51,4 @@ public class EmployeeServiceImpl implements EmployeeService {
     public Collection<Employee> findAll() {
         return employees.values();
     }
-
-    @Override
-    public List<Employee> getEmployeeList() {
-        List<Employee> employeeList = new ArrayList<>(employees.values());
-        return employeeList;
-    }
 }

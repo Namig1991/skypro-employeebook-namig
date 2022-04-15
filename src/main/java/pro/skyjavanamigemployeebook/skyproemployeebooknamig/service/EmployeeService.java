@@ -15,7 +15,6 @@ public interface EmployeeService {
 
     Collection<Employee> findAll();
 
-    java.util.List<Employee> getEmployeeList();
 }
 
 

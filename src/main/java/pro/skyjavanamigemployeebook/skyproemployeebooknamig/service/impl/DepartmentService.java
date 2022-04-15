@@ -5,9 +5,10 @@ import pro.skyjavanamigemployeebook.skyproemployeebooknamig.data.Employee;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
-public interface EmployeeServiceDepartment {
+public interface DepartmentService {
 
     Optional<Employee> maxSalaryEmployeeInDepartment(Integer department);
 
@@ -17,5 +18,5 @@ public interface EmployeeServiceDepartment {
 
     String salaryInMonth(Integer department);
 
-    List<Employee> allStuff();
+    Map<Integer, List<Employee>> findEmployeesByDepartment();
 }

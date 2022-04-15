@@ -8,26 +8,30 @@ import pro.skyjavanamigemployeebook.skyproemployeebooknamig.service.EmployeeServ
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static java.util.Comparator.comparing;
+import static java.util.stream.Collectors.groupingBy;
+
 
 @Service
-public class EmployeeServiceDepartmentImpl implements EmployeeServiceDepartment {
+public class DepartmentServiceImpl implements DepartmentService {
+
 
     private final EmployeeService employeeService;
 
-    public EmployeeServiceDepartmentImpl(EmployeeService employeeService) {
+    public DepartmentServiceImpl(EmployeeService employeeService) {
         this.employeeService = employeeService;
     }
 
     @Override
     public Optional<Employee> maxSalaryEmployeeInDepartment(Integer department) {
         return printDepartmentEmployee(department).stream()
-                .max(Comparator.comparingInt(employee -> employee.getSalary()));
+                .max(Comparator.comparingInt(Employee::getSalary));
     }
 
     @Override
     public Optional<Employee> minSalaryEmployeeInDepartment(Integer department) {
         return printDepartmentEmployee(department).stream()
-                .min(Comparator.comparingInt(employee -> employee.getSalary()));
+                .min(Comparator.comparingInt(Employee::getSalary));
     }
 
     @Override
@@ -43,7 +47,7 @@ public class EmployeeServiceDepartmentImpl implements EmployeeServiceDepartment 
         int costAmount = 0;
         double averageSalary = 0;
         final int sum = employeeService.findAll().stream()
-                .filter(e -> e.getDepartmentId() == department).mapToInt(e -> e.getSalary()).sum();
+                .filter(e -> e.getDepartmentId() == department).mapToInt(Employee::getSalary).sum();
         final int count = Math.toIntExact(employeeService.findAll().stream()
                 .filter(e -> e.getDepartmentId() == department).count());
         costAmount = sum * 30;
@@ -53,7 +57,9 @@ public class EmployeeServiceDepartmentImpl implements EmployeeServiceDepartment 
     }
 
     @Override
-    public List<Employee> allStuff() {
-        return employeeService.getEmployeeList();
+    public Map<Integer, List<Employee>> findEmployeesByDepartment() {
+        return employeeService.findAll().stream()
+                .sorted(comparing(Employee::getLastName).thenComparing(Employee::getFirstName))
+                .collect(groupingBy(Employee::getDepartmentId));
     }
 }
