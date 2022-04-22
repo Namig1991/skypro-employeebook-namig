@@ -1,5 +1,6 @@
 package pro.skyjavanamigemployeebook.skyproemployeebooknamig.service.impl;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import pro.skyjavanamigemployeebook.skyproemployeebooknamig.data.Employee;
 import pro.skyjavanamigemployeebook.skyproemployeebooknamig.exception.EmployeeExistsException;
@@ -50,5 +51,15 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public Collection<Employee> findAll() {
         return employees.values();
+    }
+    @Override
+    public Employee checkFullName(String firstName, String lastName, Integer salary, Integer departmentId){
+        if(StringUtils.isAlpha(firstName) || StringUtils.isAlpha(lastName)){
+            Employee employee = new Employee(StringUtils.capitalize(firstName),
+                    StringUtils.capitalize(lastName),
+                    salary,
+                    departmentId);
+            return employee;
+        }else throw new NotFound("Введите пожалуйста корректные данные!");
     }
 }

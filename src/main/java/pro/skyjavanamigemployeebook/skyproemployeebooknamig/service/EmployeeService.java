@@ -15,6 +15,7 @@ public interface EmployeeService {
 
     Collection<Employee> findAll();
 
+    Employee checkFullName(String firstName, String lastName, Integer salary, Integer departmentId);
 }
 
 

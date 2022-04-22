@@ -14,7 +14,7 @@ public class Employee {
         this.salary = salary;
         this.departmentId = departmentId;
     }
-
+    
     public String getFirstName() {
         return firstName;
     }
