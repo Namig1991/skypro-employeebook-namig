@@ -1,13 +1,17 @@
 package pro.skyjavanamigemployeebook.skyproemployeebooknamig.service.impl;
 
-import org.apache.commons.lang3.StringUtils;
+
 import org.springframework.stereotype.Service;
 import pro.skyjavanamigemployeebook.skyproemployeebooknamig.data.Employee;
 import pro.skyjavanamigemployeebook.skyproemployeebooknamig.exception.EmployeeExistsException;
 import pro.skyjavanamigemployeebook.skyproemployeebooknamig.exception.NotFound;
 import pro.skyjavanamigemployeebook.skyproemployeebooknamig.service.EmployeeService;
 
+import javax.naming.InvalidNameException;
 import java.util.*;
+
+import static org.apache.commons.lang3.StringUtils.capitalize;
+import static org.apache.commons.lang3.StringUtils.isAlpha;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
@@ -24,7 +28,12 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee addEmployee(String firstName, String lastName, Integer salary, Integer department) {
-        Employee employeeNew = new Employee(firstName, lastName, salary, department);
+        checkName(firstName, lastName);
+        Employee employeeNew = new Employee(
+                capitalize(firstName),
+                capitalize(lastName),
+                salary,
+                department);
         if (employees.containsKey(getKey(firstName, lastName))) {
             throw new EmployeeExistsException("Ошибка! Не удалось создать сотрудника");
         }
@@ -34,6 +43,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee removeEmployee(String firstName, String lastName) {
+        checkName(firstName, lastName);
         if (!employees.containsKey(getKey(firstName, lastName))) {
             throw new NotFound("Сотрудник не найден");
         }
@@ -42,6 +52,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee findEmployee(String firstName, String lastName) {
+        checkName(firstName, lastName);
         if (!employees.containsKey(getKey(firstName, lastName))) {
             throw new NotFound("Ошибка! Сотрудник не найден!");
         }
@@ -52,14 +63,16 @@ public class EmployeeServiceImpl implements EmployeeService {
     public Collection<Employee> findAll() {
         return employees.values();
     }
-    @Override
-    public Employee checkFullName(String firstName, String lastName, Integer salary, Integer departmentId){
-        if(StringUtils.isAlpha(firstName) || StringUtils.isAlpha(lastName)){
-            Employee employee = new Employee(StringUtils.capitalize(firstName),
-                    StringUtils.capitalize(lastName),
-                    salary,
-                    departmentId);
-            return employee;
-        }else throw new NotFound("Введите пожалуйста корректные данные!");
+
+    public void checkName(String... names) {
+        for (String name : names) {
+            if (!isAlpha(name)) {
+                try {
+                    throw new InvalidNameException("Введите имя корректно!");
+                } catch (InvalidNameException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
     }
 }
