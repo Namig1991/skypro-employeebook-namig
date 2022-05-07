@@ -81,7 +81,7 @@ public class DepartmentServiceImplTest {
     @Test
     public void checkingEmployeeIsNotOnTheList(){
         assertEquals(0, employeeService.findAll().size());
-        assertThrows(NotFound.class, () -> employeeService.findAll());
+        assertThrows(NotFound.class, () -> out.maxSalaryEmployeeInDepartment(121));
     }
 
 }
