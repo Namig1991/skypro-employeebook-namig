@@ -1,7 +1,5 @@
 package pro.skyjavanamigemployeebook.skyproemployeebooknamig;
 
-import net.bytebuddy.asm.Advice;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -10,13 +8,12 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import pro.skyjavanamigemployeebook.skyproemployeebooknamig.data.Employee;
-import pro.skyjavanamigemployeebook.skyproemployeebooknamig.exception.NotFound;
+import pro.skyjavanamigemployeebook.skyproemployeebooknamig.exception.EmployeeNotFoundException;
 import pro.skyjavanamigemployeebook.skyproemployeebooknamig.service.impl.DepartmentServiceImpl;
 import pro.skyjavanamigemployeebook.skyproemployeebooknamig.service.impl.EmployeeServiceImpl;
 import org.junit.jupiter.params.provider.Arguments;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -81,7 +78,7 @@ public class DepartmentServiceImplTest {
     @Test
     public void checkingEmployeeIsNotOnTheList(){
         assertEquals(0, employeeService.findAll().size());
-        assertThrows(NotFound.class, () -> out.maxSalaryEmployeeInDepartment(121));
+        assertThrows(EmployeeNotFoundException.class, () -> out.maxSalaryEmployeeInDepartment(121));
     }
 
 }
