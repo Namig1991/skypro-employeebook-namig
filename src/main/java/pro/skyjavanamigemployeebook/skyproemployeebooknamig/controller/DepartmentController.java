@@ -9,8 +9,6 @@ import pro.skyjavanamigemployeebook.skyproemployeebooknamig.data.Employee;
 import pro.skyjavanamigemployeebook.skyproemployeebooknamig.service.impl.DepartmentService;
 
 import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
 
 
 @RestController
@@ -24,26 +22,29 @@ public class DepartmentController {
     }
 
     @GetMapping(path = "/all")
-    public List<Employee> allStuff(){
-        return (List<Employee>) departmentService.findEmployeesByDepartment();
+    public Employee allStuff() {
+        Employee result = (Employee) departmentService.findEmployeesByDepartment();
+        return result;
     }
 
     @GetMapping("/max-salary")
-    public Optional<Employee> maxSalaryEmployeeInDepartment(@RequestParam Integer departmentId){
-        return departmentService.maxSalaryEmployeeInDepartment(departmentId);
+    public Employee maxSalaryEmployeeInDepartment(@RequestParam Integer departmentId) {
+        Employee result = departmentService.maxSalaryEmployeeInDepartment(departmentId);
+        return result;
     }
 
     @GetMapping("/min-salary")
-    public Optional<Employee> minSalaryEmployeeInDepartment(@RequestParam Integer departmentId){
-        return departmentService.minSalaryEmployeeInDepartment(departmentId);
+    public Employee minSalaryEmployeeInDepartment(@RequestParam Integer departmentId) {
+        Employee result = departmentService.minSalaryEmployeeInDepartment(departmentId);
+        return result;
     }
 
-    @GetMapping(name="/all", params = {"departmentId"})
-    public Collection<Employee> allStuff(@RequestParam Integer departmentId){
+    @GetMapping(name = "/all", params = {"departmentId"})
+    public Collection<Employee> allStuff(@RequestParam Integer departmentId) {
         return departmentService.printDepartmentEmployee(departmentId);
     }
 
-    @GetMapping(name ="/expenses", params = {"departmentsId"})
+    @GetMapping(name = "/expenses", params = {"departmentsId"})
     public String expensesForSalaryInMonth(@RequestParam Integer departmentId) {
         return departmentService.salaryInMonth(departmentId);
     }

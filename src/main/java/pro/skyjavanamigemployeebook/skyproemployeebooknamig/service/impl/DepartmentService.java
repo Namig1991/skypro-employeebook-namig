@@ -10,9 +10,9 @@ import java.util.Optional;
 
 public interface DepartmentService {
 
-    Optional<Employee> maxSalaryEmployeeInDepartment(Integer department);
+    Employee maxSalaryEmployeeInDepartment(int departmentId);
 
-    Optional<Employee> minSalaryEmployeeInDepartment(Integer department);
+    Employee minSalaryEmployeeInDepartment(int departmentId);
 
     Collection<Employee> printDepartmentEmployee(Integer department);
 

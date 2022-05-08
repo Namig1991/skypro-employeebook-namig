@@ -6,6 +6,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @ResponseStatus(HttpStatus.BAD_REQUEST)
 public class InavalidNameException extends IllegalAccessError {
     public InavalidNameException(String name){
-        super("Неверное имя!" + name);
+        super(name);
     }
 }

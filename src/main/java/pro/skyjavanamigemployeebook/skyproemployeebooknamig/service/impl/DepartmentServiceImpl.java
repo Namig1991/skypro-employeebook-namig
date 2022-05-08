@@ -3,19 +3,19 @@ package pro.skyjavanamigemployeebook.skyproemployeebooknamig.service.impl;
 
 import org.springframework.stereotype.Service;
 import pro.skyjavanamigemployeebook.skyproemployeebooknamig.data.Employee;
+import pro.skyjavanamigemployeebook.skyproemployeebooknamig.exception.EmployeeNotFoundException;
 import pro.skyjavanamigemployeebook.skyproemployeebooknamig.service.EmployeeService;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 import static java.util.Comparator.comparing;
+import static java.util.Comparator.comparingInt;
 import static java.util.stream.Collectors.groupingBy;
 
 
 @Service
 public class DepartmentServiceImpl implements DepartmentService {
-
-
     private final EmployeeService employeeService;
 
     public DepartmentServiceImpl(EmployeeService employeeService) {
@@ -23,15 +23,15 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
-    public Optional<Employee> maxSalaryEmployeeInDepartment(Integer department) {
-        return printDepartmentEmployee(department).stream()
-                .max(Comparator.comparingInt(Employee::getSalary));
+    public Employee maxSalaryEmployeeInDepartment(int departmentId) {
+        return employeeService.findAll().stream().filter(e -> e.getDepartmentId() == departmentId).
+                max(comparingInt(Employee::getSalary)).orElseThrow(() -> new EmployeeNotFoundException("Сотрудник не найден!"));
     }
 
     @Override
-    public Optional<Employee> minSalaryEmployeeInDepartment(Integer department) {
-        return printDepartmentEmployee(department).stream()
-                .min(Comparator.comparingInt(Employee::getSalary));
+    public Employee minSalaryEmployeeInDepartment(int departmentId) {
+        return employeeService.findAll().stream().filter(employee -> employee.getDepartmentId() == departmentId).
+                min(comparingInt(Employee::getSalary)).orElseThrow(() -> new EmployeeNotFoundException("Сотрудник не найден!"));
     }
 
     @Override
